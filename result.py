@@ -16,7 +16,7 @@ def show_result(inp_mov:list):
         recommended_movie = df[df['title'] == movie_title].iloc[0]
         popularity = recommended_movie['popularity']
         vote_average = recommended_movie['vote_average']
-        print(f"{i}. {movie_title} (Popularity: {popularity:.2f}, Vote Average: {vote_average:.2f})")
+        # print(f"{i}. {movie_title} (Popularity: {popularity:.2f}, Vote Average: {vote_average:.2f})")
         all_data.append([movie_title,f"{popularity:.2f}",f"{vote_average:.2f}"])
     return all_data
 

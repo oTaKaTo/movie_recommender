@@ -2,10 +2,12 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import json
-import seaborn as sns
-from wordcloud import WordCloud
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from wordcloud import WordCloud
+import seaborn as sns
+np.set_printoptions(threshold=np.inf)
+
 
 df = pd.read_csv('tmdb_moviescsvconvert.csv')
 # Define a function to handle parsing JSON or lists
@@ -45,10 +47,13 @@ df['string'] = df.apply(genres_and_keywords_to_string, axis=1)
 
 # Initialize the TF-IDF vectorizer with a specified maximum number of features
 tfidf = TfidfVectorizer(max_features=2000)
-
 X = tfidf.fit_transform(df['string'])
+print(X)
+
 title_to_index = pd.Series(df.index, index=df['title'].str.lower())
 
+# print(X)
+# print(tfidf.vocabulary_)
 
 
 # Define a function to recommend movies based on a given title
@@ -61,16 +66,21 @@ def recommend(title_data):
 
     # Extract the TF-IDF vector for the input movie
     result = sum(lis)/len(title_data)
+    # print(result.toarray())
+    # print("-"*50)
+    # print(X.toarray())
 
     # Calculate cosine similarities between the input movie and all movies
     scores = cosine_similarity(result, X)
-
+    print(scores)
+    print("-"*50)
     # Flatten the similarity scores
     scores = scores.flatten()
+    print(scores)
 
     # Sort indices by descending similarity scores (excluding the input movie itself)
     recommended_movie_id = (-scores).argsort()[len(title_data):10+len(title_data)]
-
+    print(recommended_movie_id)
     # Return the titles of the top 10 recommended movies
     return df['title'].iloc[recommended_movie_id]
 

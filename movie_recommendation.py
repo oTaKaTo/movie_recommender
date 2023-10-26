@@ -12,6 +12,8 @@ pygame.init()
 
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+img = pygame.image.load('icon.ico')
+pygame.display.set_icon(img)
 clock = pygame.time.Clock()
 running = True
 dt = 0

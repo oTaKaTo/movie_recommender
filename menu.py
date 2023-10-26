@@ -71,7 +71,8 @@ class Menu:
                 if event.key == pygame.K_RETURN:
                     submit.clicked = True
                 # Check for backspace 
-
+                if event.key == pygame.K_ESCAPE:
+                    self.user_text = ''
                 elif event.key == pygame.K_BACKSPACE: 
                     if pygame.time.get_ticks() - key_repeat_time >= REPEAT_DELAY:
                         key_repeat_key = pygame.K_BACKSPACE
@@ -81,6 +82,7 @@ class Menu:
                         self.user_text = self.user_text[:-1]
                 else: 
                     self.user_text += event.unicode
+                
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_BACKSPACE:
                     key_repeat_key = None
